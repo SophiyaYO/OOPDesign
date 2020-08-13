@@ -14,13 +14,15 @@ public class Money {
         this.currency = currency;
     }
 
-    public double getValue() {
-        return value;
-    }
+   private  double normalized(){
+        return currency == Currency.USD
+                ? value
+                : value * currency.conversionRateTo(Currency.USD);
+   }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
+   public boolean isGreaterThan( Money3 op) {
+        return (normalized()>op.normalized());
+   }
 
 }
 
