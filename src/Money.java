@@ -1,3 +1,10 @@
+enum Currency{
+    USD, EURO;
+    public double conversionRateTo(Currency target){
+        return 1.0;
+    }
+}
+
 public class Money {
     private double value;
 
