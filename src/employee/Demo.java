@@ -20,7 +20,7 @@ class Contractor implements Payable {
     }
 }
 
-class Colunteer {
+class Volunteer {
 }
 
 class Vendor implements Payable {
