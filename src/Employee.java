@@ -1,8 +1,8 @@
 import java.util.Currency;
 interface Timesheet{}
 interface Invoice{}
-class Money {
-    public Money(double val, Currency c) {
+class Moneyy {
+    public Moneyy(double val, Currency c) {
 
     }
 }
@@ -30,8 +30,8 @@ abstract class Employee extends Worker{
     }
     public void attachTimesheet(Timesheet i) {}
 
-    protected Money getAmountDue(){
-        return new Money(12.34, Currency.getInstance("USD"));
+    protected Moneyy getAmountDue(){
+        return new Moneyy(12.34, Currency.getInstance("USD"));
     }
 }
 
