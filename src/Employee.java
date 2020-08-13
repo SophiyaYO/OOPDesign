@@ -41,15 +41,18 @@ abstract class  Contractor extends Worker{
     }
     private  Invoice[] invoicesDue;
     public void attachInvoice(Invoice i) {}
-
+    protected Money getAmountDue(){
+        return new Money(12.34, Currency.getInstance("USD"));
+    }
 }
 
 class AccountsPayable{
-    Worker[] workers;
+    Payable[] creditors;
+
 
     public void PayEverybody(){
-        for (Worker worker: workers){
-            worker.pay();
+        for (Payable creditor: creditors){
+            creditor.pay();
         }
     }
 }
