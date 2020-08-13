@@ -1,19 +1,25 @@
 import java.util.Currency;
 interface Timesheet{}
 interface Invoice{}
-class MoneyY {
-    public MoneyY(double val, Currency c) {
+class Money {
+    public Money(double val, Currency c) {
 
     }
 }
 
-abstract class Worker {
+interface Payable{
+    void pay();
+}
+
+abstract class Worker implements Payable{
     private String name;
     public Worker(String name){
         this.name=name;
     }
 
-    public  void  pay(){/**/}
+    public  void  pay(){
+        Money due = getAmountDue();
+    }
     abstract protected Money getAmountDue();
 }
 
@@ -23,6 +29,10 @@ abstract class Employee extends Worker{
         super(name);
     }
     public void attachTimesheet(Timesheet i) {}
+
+    protected Money getAmountDue(){
+        return new Money(12.34, Currency.getInstance("USD"));
+    }
 }
 
 abstract class  Contractor extends Worker{
