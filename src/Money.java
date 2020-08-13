@@ -20,7 +20,7 @@ public class Money {
                 : value * currency.conversionRateTo(Currency.USD);
    }
 
-   public boolean isGreaterThan( Money3 op) {
+   public boolean isGreaterThan( Money op) {
         return (normalized()>op.normalized());
    }
 
@@ -33,16 +33,8 @@ class Test{
        Money balance = new Money(1.0, Currency.EURO);
        Money request = new Money(1.0, Currency.USD);
 
-       double normalizeBalance = balance.getValue() *
-               balance.getCurrency()
-               .conversionRateTo(Currency.USD);
-
-       double normalizeRequest = request.getValue() *
-               request.getCurrency()
-               .conversionRateTo(Currency.USD);
-
-       if (normalizeBalance > normalizeRequest){
-           dispenseFunds(request);
-       }
+      if (balance.isGreaterThan(request)){
+          dispenseFunds(request);
+      }
     }
 }
