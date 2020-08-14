@@ -27,9 +27,24 @@ interface JsonDB {
 public class Employee {
     private String name;
 
-    public Employee(String id, JsonDB database) throws Exception {
+    public Employee(String id) throws Exception {
+        JsonDB database = JsonDBFactory.create();
         HashMap<String, String> result = database.lookup(id);
         name = result.get("name");
+        JsonDBFactory.destroy(database);
+    }
+}
+
+class JsonDBFactory {
+    public static JsonDB create() throws Exception {
+        String dbLocation = "http://holub.com/employees";
+        JsonDB database = new JsonDB.Default();
+        database.open(new URL(dbLocation));
+        return database;
+    }
+
+    public static void destroy(JsonDB db) {
+        db.close();
     }
 }
 
@@ -60,10 +75,6 @@ class DatabaseSpy implements JsonDB {
 
 class Test {
     public void test() throws Exception {
-        String dbLocation = "http://holub.com/employees";
-        JsonDB database = new DatabaseMock();
-        database.open(new URL(dbLocation));
-        Employee sofia = new Employee("Sofia", database);
-        database.close();
+        Employee sofia = new Employee("Sofia");
     }
 }
