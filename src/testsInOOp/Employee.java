@@ -27,26 +27,39 @@ interface JsonDB {
 public class Employee {
     private String name;
 
-    public Employee(String id, JsonDB database) throws Exception{
-        HashMap<String,String> result = database.lookup(id);
+    public Employee(String id, JsonDB database) throws Exception {
+        HashMap<String, String> result = database.lookup(id);
         name = result.get("name");
     }
 }
 
-class DatabaseMock implements JsonDB{
-    @Override public void open(URL location){}
-    @Override public void close(){}
+class DatabaseSpy implements JsonDB {
+    JsonDB wrapped;
+
+    public DatabaseSpy(JsonDB wrapped) {
+        this.wrapped = wrapped;
+    }
+
+    @Override
+    public void open(URL location) {
+        wrapped.open(location);
+    }
+
+    @Override
+    public void close() {
+        wrapped.close();
+    }
 
     @Override
     public HashMap<String, String> lookup(String key) {
-        HashMap<String,String> employee = new HashMap<>();
-        employee.put("name", "Sofia");
-        return employee;
+        HashMap<String, String> result = wrapped.lookup(key);
+        System.out.println(result.toString());
+        return result;
     }
 }
 
-class Test{
-    public void test() throws Exception{
+class Test {
+    public void test() throws Exception {
         String dbLocation = "http://holub.com/employees";
         JsonDB database = new DatabaseMock();
         database.open(new URL(dbLocation));
