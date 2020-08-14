@@ -1,6 +1,6 @@
 package employeeNoSettersOrGettersOCP;
 
-import java.io.Writer;
+import java.io.Reader;
 
 public class Employee {
     private String name;
@@ -9,20 +9,39 @@ public class Employee {
         this.name = name;
     }
 
-    public enum FORMAT {XML, JSON}
-
-    public Employee(String source, FORMAT inputFormat) {
+    interface Importer {
+        String fetchName();
     }
 
-    public Employee(java.sql.Connection con, int ID) {
+    interface Exporter {
+        void storeName(String name);
     }
 
-    public void exportAsJSON(Writer out) {
+    public Employee(Importer source) {
+        name = source.fetchName();
     }
 
-    public void exportAsXML(Writer out) {
+    public void export(Exporter destination) {
+        destination.storeName(name);
     }
+}
 
-    public void exportAsSQL(java.sql.Connection out) {
+class JsonImporter implements Employee.Importer{
+    private Reader in;
+    public JsonImporter (Reader in) {
+        this.in = in;
+    }
+    public String fetchName(){
+        //..
+        return "Sofia";
+    }
+}
+
+class XMLImporter implements Employee.Importer{
+    private Reader in;
+    public XMLImporter(Reader in){this.in=in;}
+    public String fetchName(){
+        //..
+        return "Yordanova";
     }
 }
