@@ -9,7 +9,6 @@ class AccountsPayable implements PaymentObserver{
     static AccountsPayable getInstance() {
         return  instance;
     }
-
     public void  amPaying(Payable employee){/**/}
 }
 
