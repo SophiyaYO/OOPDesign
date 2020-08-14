@@ -25,4 +25,14 @@ interface JsonDB {
 
 
 public class Employee {
+    private String name;
+    private static String dbLocation = "http://holub.com/employees";
+
+    public Employee(String id) throws Exception{
+        JsonDB database = new JsonDB.Default();
+        database.open(new URL(dbLocation));
+        HashMap<String,String> result = database.lookup(id);
+        name = result.get("name");
+        database.close();
+    }
 }
